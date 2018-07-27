@@ -11,6 +11,7 @@ inputs:
   - name: pipeline-factory
   - name: auth
   - name: pcf-automation-tasks
+  - name: pcf-automation-image
 
 run:
   path: python3.6
