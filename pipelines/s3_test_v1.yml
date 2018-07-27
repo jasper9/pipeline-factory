@@ -57,7 +57,11 @@ jobs:
     - get: auth
     - get: pipeline-factory
     - get: pcf-automation-tasks
+      params:
+        unpack: true
     - get: pcf-automation-image
+      params:
+        unpack: true    
   - task: get-started-task
     file: pipeline-factory/jobs/get-started-job/get-started-task/get-started-task.yml
     #params: *pipeline_params
