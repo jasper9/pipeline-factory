@@ -1,0 +1,23 @@
+---
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+    repository: jasper9/innkeeper2-worker
+
+params:
+  SWT_SPEC:
+  HOST_SPEC:
+  SLOT_SPEC:
+  NETWORK_SPEC:
+  HOST_CONFIG_SPEC:
+  VM_CONFIG_SPEC:
+    
+inputs:
+  - name: innkeeper2-pipeline 
+
+run:
+  path: python3.6
+  args:
+  - ./innkeeper2-pipeline/jobs/get-started-job/get-started-task/get-started.py
