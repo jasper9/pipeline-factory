@@ -10,19 +10,20 @@ resources:
 - name: auth
   type: s3
   source:
-    access_key_id: ((access_key_id))
-    bucket: ((s3.buckets.auth))
-    region_name: ((s3.region_name))
+    access_key_id: ((s3.access_key_id))
+    bucket: ((s3.bucket))
     secret_access_key: ((s3.secret_access_key))
     endpoint: ((s3.endpoint))
-    versioned_file: auth.yml
+    skip_ssl_verification: ((s3.skip_ssl_verification))
+    use_v2_signing: ((s3.use_v2_signing))
+    regexp: auth-(.*).yml
     
 
-#- name: pipeline-factory
-#  type: git
-#  source:
-#    uri: https://github.com/jasper9/pipeline-factory.git
-#    branch: master
+- name: pipeline-factory
+  type: git
+  source:
+    uri: https://github.com/jasper9/pipeline-factory.git
+    branch: master
 
 
 
@@ -32,6 +33,7 @@ jobs:
   max_in_flight: 1
   plan:
   - get: auth
+  - get: pipeline-factory
   - task: get-started-task
     file: pipeline-factory/jobs/get-started-job/get-started-task/get-started-task.yml
     #params: *pipeline_params

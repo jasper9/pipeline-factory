@@ -8,9 +8,10 @@ image_resource:
 
     
 inputs:
-  - name: innkeeper2-pipeline 
+  - name: pipeline-factory
+  - name: auth
 
 run:
   path: python3.6
   args:
-  - ./innkeeper2-pipeline/jobs/get-started-job/get-started-task/get-started.py
+  - ./pipeline-factory/jobs/get-started-job/get-started-task/get-started.py
