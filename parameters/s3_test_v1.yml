@@ -1,2 +1,6 @@
 input_spec: |
   s3.access_key_id: blah
+  s3.buckets.auth: blah
+  s3.region_name: blah
+  s3.secret_access_key: blah
+  s3.endpoint: 

@@ -1,6 +1,8 @@
 ---
-pipeline_params: &pipeline_params
-  INPUT_SPEC: ((input_spec))
+
+#pipeline_params: &pipeline_params
+#  INPUT_SPEC: ((input_spec))
+
 
 
 resources:
@@ -8,12 +10,13 @@ resources:
 - name: auth
   type: s3
   source:
-    access_key_id: ((s3.access_key_id))
+    access_key_id: ((access_key_id))
     bucket: ((s3.buckets.auth))
     region_name: ((s3.region_name))
     secret_access_key: ((s3.secret_access_key))
     endpoint: ((s3.endpoint))
     versioned_file: auth.yml
+    
 
 #- name: pipeline-factory
 #  type: git
@@ -31,4 +34,4 @@ jobs:
   - get: auth
   - task: get-started-task
     file: pipeline-factory/jobs/get-started-job/get-started-task/get-started-task.yml
-    params: *pipeline_params
+    #params: *pipeline_params

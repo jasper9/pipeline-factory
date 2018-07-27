@@ -6,13 +6,6 @@ image_resource:
   source:
     repository: jasper9/innkeeper2-worker
 
-params:
-  SWT_SPEC:
-  HOST_SPEC:
-  SLOT_SPEC:
-  NETWORK_SPEC:
-  HOST_CONFIG_SPEC:
-  VM_CONFIG_SPEC:
     
 inputs:
   - name: innkeeper2-pipeline 
