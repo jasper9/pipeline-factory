@@ -40,7 +40,6 @@ resources:
     use_v2_signing: ((s3.use_v2_signing))
     regexp: image-(.*).tar
 
-
 - name: pipeline-factory
   type: git
   source:
@@ -59,6 +58,6 @@ jobs:
     - get: pipeline-factory
     - get: pcf-automation-tasks
     - get: pcf-automation-image
-  - task: get-started-task
+    - task: get-started-task
       file: pipeline-factory/jobs/get-started-job/get-started-task/get-started-task.yml
       #params: *pipeline_params
