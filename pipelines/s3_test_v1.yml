@@ -17,7 +17,18 @@ resources:
     skip_ssl_verification: ((s3.skip_ssl_verification))
     use_v2_signing: ((s3.use_v2_signing))
     regexp: auth-(.*).yml
-    
+
+- name: pcf-automation-tasks
+  type: s3
+  source:
+    access_key_id: ((s3.access_key_id))
+    bucket: ((s3.bucket))
+    secret_access_key: ((s3.secret_access_key))
+    endpoint: ((s3.endpoint))
+    skip_ssl_verification: ((s3.skip_ssl_verification))
+    use_v2_signing: ((s3.use_v2_signing))
+    versioned_file: tasks-(.*)
+
 
 - name: pipeline-factory
   type: git
@@ -34,6 +45,7 @@ jobs:
   plan:
   - get: auth
   - get: pipeline-factory
+  - get: pcf-automation-tasks
   - task: get-started-task
     file: pipeline-factory/jobs/get-started-job/get-started-task/get-started-task.yml
     #params: *pipeline_params

@@ -10,6 +10,7 @@ image_resource:
 inputs:
   - name: pipeline-factory
   - name: auth
+  - name: pcf-automation-tasks
 
 run:
   path: python3.6
