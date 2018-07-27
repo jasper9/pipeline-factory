@@ -53,11 +53,10 @@ jobs:
 - name: get-started-job
   max_in_flight: 1
   plan:
-  - aggregate:
-    - get: auth
-    - get: pipeline-factory
-    - get: pcf-automation-tasks
-    - get: pcf-automation-image
-    - task: get-started-task
-      file: pipeline-factory/jobs/get-started-job/get-started-task/get-started-task.yml
-      #params: *pipeline_params
+  - get: auth
+  - get: pipeline-factory
+  - get: pcf-automation-tasks
+  - get: pcf-automation-image
+  - task: get-started-task
+    file: pipeline-factory/jobs/get-started-job/get-started-task/get-started-task.yml
+    #params: *pipeline_params
