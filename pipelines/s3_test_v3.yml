@@ -95,6 +95,6 @@ jobs:
       PRODUCT_NAME: p-healthwatch 
   - put: staged-config-file
     params:
-      file: wip/staged-config147-1.zip      
+      file: generated-config/p-healthwatch.yml
 
 
