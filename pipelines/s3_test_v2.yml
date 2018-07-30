@@ -69,7 +69,7 @@ jobs:
         unpack: true    
   - put: auth
     params:
-      file: auth/auth.yml        
+      file: auth/auth-1.yml        
   - task: get-started-task
     file: pipeline-factory/jobs/get-started-job/get-started-task/get-started-task.yml
 
