@@ -64,10 +64,10 @@ jobs:
         unpack: true
   - put: auth
     params:
-      file: auth/auth-147.yml 
+      file: auth/auth147-1.yml 
   - task: export-installation
     image: pcf-automation-image
     file: pcf-automation-tasks/tasks/export-installation.yml
     params:
-      AUTH_CONFIG_FILE: auth-147.yml
+      AUTH_CONFIG_FILE: auth147-1.yml 
 
