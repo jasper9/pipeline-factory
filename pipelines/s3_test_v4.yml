@@ -122,7 +122,7 @@ resources:
     regexp: tiles/p-healthwatch-(.*).pivotal
 
 jobs:
-- name: upload-file
+- name: upload-healthwatch
   max_in_flight: 1
   plan:
   - aggregate:
@@ -141,8 +141,11 @@ jobs:
       product: p-healthwatch-s3
     params:
       AUTH_CONFIG_FILE: auth147-1.yml
+  - task: resolve-stemcell
+    file: pipeline-factory/tasks/resolve-stemcell/resolve-stemcell.yml
 
-- name: create-config-job
+
+- name: config-healthwatch
   max_in_flight: 1
   plan:
   - aggregate:
@@ -150,15 +153,16 @@ jobs:
     - get: pipeline-factory-templates
     - get: auth
     - get: pcf-automation-tasks
-      passed: [upload-file]
+      passed: [upload-healthwatch]
+      trigger: true 
       params:
         unpack: true
     - get: pcf-automation-image
       params:
         unpack: true
 
-  - task: create-config-task
-    file: pipeline-factory/jobs/create-config-job/create-config-task/create-config.yml
+  - task: create-config
+    file: pipeline-factory/tasks/create-config/create-config.yml
     params: *pipeline_params
 
   - task: configure-healthwatch

@@ -23,4 +23,4 @@ outputs:
 run:
   path: python3.6
   args:
-  - ./pipeline-factory/jobs/create-config-job/create-config-task/create-config.py
+  - ./pipeline-factory/tasks/create-config/create-config.py
