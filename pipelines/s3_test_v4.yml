@@ -126,6 +126,7 @@ jobs:
   max_in_flight: 1
   plan:
   - aggregate:
+    - get: pipeline-factory    
     - get: auth
     - get: p-healthwatch-s3
     - get: pcf-automation-tasks
