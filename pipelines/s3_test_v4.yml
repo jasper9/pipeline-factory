@@ -1,7 +1,7 @@
 ---
 
-#pipeline_params: &pipeline_params
-#  INPUT_SPEC: ((input_spec))
+pipeline_params: &pipeline_params
+  TILE1_SPEC: ((tile1_spec))
 
 
 
@@ -79,7 +79,7 @@ jobs:
 
   - task: create-config-task
     file: pipeline-factory/jobs/create-config-job/create-config-task/create-config.yml
-    #params: *pipeline_params
+    params: *pipeline_params
 
 # - name: staged-config-job
 #   plan:
