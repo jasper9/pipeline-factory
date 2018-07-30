@@ -6,16 +6,16 @@ pipeline_params: &pipeline_params
 
 
 resources:
-- name: configured-template
-  type: s3
-  source:
-    access_key_id: ((s3.access_key_id))
-    bucket: ((s3.bucket))
-    secret_access_key: ((s3.secret_access_key))
-    endpoint: ((s3.endpoint))
-    skip_ssl_verification: ((s3.skip_ssl_verification))
-    use_v2_signing: ((s3.use_v2_signing))
-    regexp: configured-template/haas147_p-healthwatch-(.*).yml
+# - name: configured-template
+#   type: s3
+#   source:
+#     access_key_id: ((s3.access_key_id))
+#     bucket: ((s3.bucket))
+#     secret_access_key: ((s3.secret_access_key))
+#     endpoint: ((s3.endpoint))
+#     skip_ssl_verification: ((s3.skip_ssl_verification))
+#     use_v2_signing: ((s3.use_v2_signing))
+#     regexp: configured-template/haas147_p-healthwatch-(.*).yml
 
 
 # - name: template
