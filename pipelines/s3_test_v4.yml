@@ -128,7 +128,8 @@ jobs:
     file: pcf-automation-tasks/tasks/upload-and-stage-product.yml
     input_mapping:
       product: p-healthwatch
-
+    params:
+      AUTH_CONFIG_FILE: auth147-1.yml
 
 - name: create-config-job
   max_in_flight: 1
@@ -138,6 +139,7 @@ jobs:
     - get: pipeline-factory-templates
     - get: auth
     - get: pcf-automation-tasks
+      passed: [upload-file]
       params:
         unpack: true
     - get: pcf-automation-image
