@@ -12,7 +12,7 @@ inputs:
   - name: pipeline-factory
   
   - name: template
-      path: ./template.yml
+
 
 outputs:
   - name: generated-config 
