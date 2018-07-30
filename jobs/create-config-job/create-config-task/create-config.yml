@@ -10,8 +10,8 @@ params:
     
 inputs:
   - name: pipeline-factory
-    path: template.yml
-    
+      path: ./template.yml
+
 outputs:
   - name: generated-config 
 
