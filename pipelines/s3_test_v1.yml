@@ -16,7 +16,7 @@ resources:
     endpoint: ((s3.endpoint))
     skip_ssl_verification: ((s3.skip_ssl_verification))
     use_v2_signing: ((s3.use_v2_signing))
-    regexp: auth-(.*).yml
+    versioned_file: auth.yml
 
 - name: pcf-automation-tasks
   type: s3
