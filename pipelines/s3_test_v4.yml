@@ -18,16 +18,16 @@ resources:
     regexp: configured-template/haas147_p-healthwatch-(.*).yml
 
 
-- name: template
-  type: s3
-  source:
-    access_key_id: ((s3.access_key_id))
-    bucket: ((s3.bucket))
-    secret_access_key: ((s3.secret_access_key))
-    endpoint: ((s3.endpoint))
-    skip_ssl_verification: ((s3.skip_ssl_verification))
-    use_v2_signing: ((s3.use_v2_signing))
-    regexp: templates/((tile1-slug))-(.*).yml
+# - name: template
+#   type: s3
+#   source:
+#     access_key_id: ((s3.access_key_id))
+#     bucket: ((s3.bucket))
+#     secret_access_key: ((s3.secret_access_key))
+#     endpoint: ((s3.endpoint))
+#     skip_ssl_verification: ((s3.skip_ssl_verification))
+#     use_v2_signing: ((s3.use_v2_signing))
+#     regexp: templates/((tile1-slug))-(.*).yml
 
 
 # - name: auth
@@ -91,6 +91,11 @@ resources:
     uri: https://github.com/jasper9/pipeline-factory.git
     branch: master
 
+- name: pipeline-factory-templates
+  type: git
+  source:
+    uri: https://github.com/jasper9/pipeline-factory-templates.git
+    branch: master
 
 
 jobs:
@@ -99,7 +104,8 @@ jobs:
   plan:
   - aggregate:
     - get: pipeline-factory
-    - get: template
+    - get: pipeline-factory-templates
+
 
   - task: create-config-task
     file: pipeline-factory/jobs/create-config-job/create-config-task/create-config.yml
