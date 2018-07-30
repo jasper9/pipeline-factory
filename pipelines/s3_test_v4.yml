@@ -105,15 +105,28 @@ jobs:
   - aggregate:
     - get: pipeline-factory
     - get: pipeline-factory-templates
-
+    - get: auth
+    - get: pcf-automation-tasks
+      params:
+        unpack: true
+    - get: pcf-automation-image
+      params:
+        unpack: true
 
   - task: create-config-task
     file: pipeline-factory/jobs/create-config-job/create-config-task/create-config.yml
     params: *pipeline_params
 
-  - put: configured-template
+  - task: configure-healthwatch
+    image: pcf-automation-image
+    file: pcf-automation-tasks/tasks/configure-product.yml
     params:
-      file: configured-template/haas147_p-healthwatch-1.0.0.yml 
+      CONFIG_FILE: configured-template/haas147_p-healthwatch-1.0.0.yml
+      VARS_FILE:
+        
+  # - put: configured-template
+  #   params:
+  #     file: configured-template/haas147_p-healthwatch-1.0.0.yml 
 
 
 # - name: staged-config-job
