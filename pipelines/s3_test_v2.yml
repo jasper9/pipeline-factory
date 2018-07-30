@@ -46,7 +46,10 @@ resources:
     uri: https://github.com/jasper9/pipeline-factory.git
     branch: master
 
-
+- name: one-time-trigger
+  type: time
+  source:
+    interval: 999999h
 
 jobs:
 
@@ -62,12 +65,18 @@ jobs:
     - get: pcf-automation-image
       params:
         unpack: true    
+  - put: auth
+    params:
+      file: auth/auth.yml        
   - task: get-started-task
     file: pipeline-factory/jobs/get-started-job/get-started-task/get-started-task.yml
 
 - name: export-job
   plan:
   - aggregate:
+    - get: one-time-trigger
+      passed: [get-started-job]
+      trigger: true    
     - get: auth
     - get: pipeline-factory
     - get: pcf-automation-tasks
@@ -76,9 +85,7 @@ jobs:
     - get: pcf-automation-image
       params:
         unpack: true
-  - put: auth
-    params:
-      file: auth/auth.yml
+
   - task: export-installation
     image: pcf-automation-image
     file: pcf-automation-tasks/tasks/export-installation.yml
