@@ -175,11 +175,13 @@ jobs:
       OPSMAN_USERNAME: ((OPSMAN_USERNAME))
       OPSMAN_PASSWORD: ((OPSMAN_PASSWORD))
       pivnet_token: ((pivnet_token))
-  - task: upload-stemcell
-    image: pcf-automation-image
-    file: pcf-automation-tasks/tasks/upload-stemcell.yml
-    params:
-      AUTH_CONFIG_FILE: auth147-1.yml
+  # - task: upload-stemcell
+  #   image: pcf-automation-image
+  #   file: pcf-automation-tasks/tasks/upload-stemcell.yml
+  #   params:
+  #     AUTH_CONFIG_FILE: auth147-1.yml
+
+
 - name: config-healthwatch
   max_in_flight: 1
   plan:
