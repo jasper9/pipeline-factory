@@ -6,16 +6,28 @@ pipeline_params: &pipeline_params
 
 
 resources:
-# - name: template
-#   type: s3
-#   source:
-#     access_key_id: ((s3.access_key_id))
-#     bucket: ((s3.bucket))
-#     secret_access_key: ((s3.secret_access_key))
-#     endpoint: ((s3.endpoint))
-#     skip_ssl_verification: ((s3.skip_ssl_verification))
-#     use_v2_signing: ((s3.use_v2_signing))
-#     regexp: templates/((tile1-slug))-(.*).yml
+- name: configured-template
+  type: s3
+  source:
+    access_key_id: ((s3.access_key_id))
+    bucket: ((s3.bucket))
+    secret_access_key: ((s3.secret_access_key))
+    endpoint: ((s3.endpoint))
+    skip_ssl_verification: ((s3.skip_ssl_verification))
+    use_v2_signing: ((s3.use_v2_signing))
+    regexp: wip/p-healthwatch_haas147-(.*).yml
+
+
+- name: template
+  type: s3
+  source:
+    access_key_id: ((s3.access_key_id))
+    bucket: ((s3.bucket))
+    secret_access_key: ((s3.secret_access_key))
+    endpoint: ((s3.endpoint))
+    skip_ssl_verification: ((s3.skip_ssl_verification))
+    use_v2_signing: ((s3.use_v2_signing))
+    regexp: templates/((tile1-slug))-(.*).yml
 
 
 # - name: auth
@@ -93,7 +105,10 @@ jobs:
     file: pipeline-factory/jobs/create-config-job/create-config-task/create-config.yml
     params: *pipeline_params
 
-    
+  - put: configured-template
+    params:
+      file: generated-config/config.yml 
+
 
 # - name: staged-config-job
 #   plan:
