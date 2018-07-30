@@ -22,6 +22,6 @@ print("Deployment network is " + tile1_spec['deployment_network'])
 
 
 with open("template/p-healthwatch-1.yml", "r") as in_file:
-	with open("generated-config/config.yml", "w") as out_file:
+	with open("generated-config/haas147_p-healthwatch-1.0.0", "w") as out_file:
 		for line in in_file:
 			out_file.write(line)
