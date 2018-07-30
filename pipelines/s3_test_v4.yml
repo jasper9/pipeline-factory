@@ -122,7 +122,7 @@ jobs:
     file: pcf-automation-tasks/tasks/configure-product.yml
     params:
       AUTH_CONFIG_FILE: auth147-1.yml
-      CONFIG_FILE: haas147_p-healthwatch-1.0.0.yml
+      CONFIG_FILE: p-healthwatch.yml
       VARS_FILE:
 
   # - put: configured-template

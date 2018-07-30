@@ -38,8 +38,8 @@ vals = {
 #			out_file.write(line)
 
 
-with open("pipeline-factory-templates/p-healthwatch.yml", "r") as in_file:
-	with open("config/haas147_p-healthwatch-1.0.0.yml", "w") as out_file:
+with open("pipeline-factory-templates/p-healthwatch_"+tile1_spec['version']+".yml", "r") as in_file:
+	with open("config/p-healthwatch.yml", "w") as out_file:
     		t = in_file.read()
     		rendered = jinja2.Template(t).render(vals)
     		out_file.write(rendered)
