@@ -11,6 +11,9 @@ params:
 inputs:
   - name: pipeline-factory
 
+outputs:
+  - name: generated-config 
+
 
 
 run:
