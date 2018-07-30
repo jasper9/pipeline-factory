@@ -57,6 +57,8 @@ jobs:
   max_in_flight: 1
   plan:
   - aggregate:
+    - get: one-time-trigger
+      trigger: true
     - get: auth
     - get: pipeline-factory
     - get: pcf-automation-tasks
