@@ -30,16 +30,16 @@ resources:
 #     regexp: templates/((tile1-slug))-(.*).yml
 
 
-# - name: auth
-#   type: s3
-#   source:
-#     access_key_id: ((s3.access_key_id))
-#     bucket: ((s3.bucket))
-#     secret_access_key: ((s3.secret_access_key))
-#     endpoint: ((s3.endpoint))
-#     skip_ssl_verification: ((s3.skip_ssl_verification))
-#     use_v2_signing: ((s3.use_v2_signing))
-#     regexp: auth147-(.*).yml
+- name: auth
+  type: s3
+  source:
+    access_key_id: ((s3.access_key_id))
+    bucket: ((s3.bucket))
+    secret_access_key: ((s3.secret_access_key))
+    endpoint: ((s3.endpoint))
+    skip_ssl_verification: ((s3.skip_ssl_verification))
+    use_v2_signing: ((s3.use_v2_signing))
+    regexp: auth147-(.*).yml
 
 # - name: installation
 #   type: s3
@@ -63,27 +63,27 @@ resources:
 #     use_v2_signing: ((s3.use_v2_signing))
 #     regexp: wip/staged-config147-(.*).yml
 
-# - name: pcf-automation-tasks
-#   type: s3
-#   source:
-#     access_key_id: ((s3.access_key_id))
-#     bucket: ((s3.bucket))
-#     secret_access_key: ((s3.secret_access_key))
-#     endpoint: ((s3.endpoint))
-#     skip_ssl_verification: ((s3.skip_ssl_verification))
-#     use_v2_signing: ((s3.use_v2_signing))
-#     regexp: tasks-(.*).zip
+- name: pcf-automation-tasks
+  type: s3
+  source:
+    access_key_id: ((s3.access_key_id))
+    bucket: ((s3.bucket))
+    secret_access_key: ((s3.secret_access_key))
+    endpoint: ((s3.endpoint))
+    skip_ssl_verification: ((s3.skip_ssl_verification))
+    use_v2_signing: ((s3.use_v2_signing))
+    regexp: tasks-(.*).zip
 
-# - name: pcf-automation-image
-#   type: s3
-#   source:
-#     access_key_id: ((s3.access_key_id))
-#     bucket: ((s3.bucket))
-#     secret_access_key: ((s3.secret_access_key))
-#     endpoint: ((s3.endpoint))
-#     skip_ssl_verification: ((s3.skip_ssl_verification))
-#     use_v2_signing: ((s3.use_v2_signing))
-#     regexp: image-(.*).tar
+- name: pcf-automation-image
+  type: s3
+  source:
+    access_key_id: ((s3.access_key_id))
+    bucket: ((s3.bucket))
+    secret_access_key: ((s3.secret_access_key))
+    endpoint: ((s3.endpoint))
+    skip_ssl_verification: ((s3.skip_ssl_verification))
+    use_v2_signing: ((s3.use_v2_signing))
+    regexp: image-(.*).tar
 
 - name: pipeline-factory
   type: git
