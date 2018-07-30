@@ -1,0 +1,18 @@
+---
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+    repository: jasper9/innkeeper2-worker
+
+    
+inputs:
+  - name: pipeline-factory
+
+
+
+run:
+  path: python3.6
+  args:
+  - ./pipeline-factory/jobs/create-config-job/create-config-task/create-config.py

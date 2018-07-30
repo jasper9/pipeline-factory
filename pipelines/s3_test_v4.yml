@@ -1,0 +1,108 @@
+---
+
+#pipeline_params: &pipeline_params
+#  INPUT_SPEC: ((input_spec))
+
+
+
+resources:
+
+# - name: auth
+#   type: s3
+#   source:
+#     access_key_id: ((s3.access_key_id))
+#     bucket: ((s3.bucket))
+#     secret_access_key: ((s3.secret_access_key))
+#     endpoint: ((s3.endpoint))
+#     skip_ssl_verification: ((s3.skip_ssl_verification))
+#     use_v2_signing: ((s3.use_v2_signing))
+#     regexp: auth147-(.*).yml
+
+# - name: installation
+#   type: s3
+#   source:
+#     access_key_id: ((s3.access_key_id))
+#     bucket: ((s3.bucket))
+#     secret_access_key: ((s3.secret_access_key))
+#     endpoint: ((s3.endpoint))
+#     skip_ssl_verification: ((s3.skip_ssl_verification))
+#     use_v2_signing: ((s3.use_v2_signing))
+#     regexp: wip/installation147-(.*).yml
+
+# - name: staged-config-file
+#   type: s3
+#   source:
+#     access_key_id: ((s3.access_key_id))
+#     bucket: ((s3.bucket))
+#     secret_access_key: ((s3.secret_access_key))
+#     endpoint: ((s3.endpoint))
+#     skip_ssl_verification: ((s3.skip_ssl_verification))
+#     use_v2_signing: ((s3.use_v2_signing))
+#     regexp: wip/staged-config147-(.*).yml
+
+# - name: pcf-automation-tasks
+#   type: s3
+#   source:
+#     access_key_id: ((s3.access_key_id))
+#     bucket: ((s3.bucket))
+#     secret_access_key: ((s3.secret_access_key))
+#     endpoint: ((s3.endpoint))
+#     skip_ssl_verification: ((s3.skip_ssl_verification))
+#     use_v2_signing: ((s3.use_v2_signing))
+#     regexp: tasks-(.*).zip
+
+# - name: pcf-automation-image
+#   type: s3
+#   source:
+#     access_key_id: ((s3.access_key_id))
+#     bucket: ((s3.bucket))
+#     secret_access_key: ((s3.secret_access_key))
+#     endpoint: ((s3.endpoint))
+#     skip_ssl_verification: ((s3.skip_ssl_verification))
+#     use_v2_signing: ((s3.use_v2_signing))
+#     regexp: image-(.*).tar
+
+- name: pipeline-factory
+  type: git
+  source:
+    uri: https://github.com/jasper9/pipeline-factory.git
+    branch: master
+
+
+
+jobs:
+- name: create-config-job
+  max_in_flight: 1
+  plan:
+  - aggregate:
+    - get: pipeline-factory
+
+  - task: create-config-task
+    file: pipeline-factory/jobs/create-config-job/create-config-task/create-config.yml
+    #params: *pipeline_params
+
+# - name: staged-config-job
+#   plan:
+#   - aggregate:  
+#     - get: auth
+#     - get: pipeline-factory
+#     - get: pcf-automation-tasks
+#       params:
+#         unpack: true
+#     - get: pcf-automation-image
+#       params:
+#         unpack: true
+#   - put: auth
+#     params:
+#       file: auth/auth147-1.yml 
+#   - task: staged-config
+#     image: pcf-automation-image
+#     file: pcf-automation-tasks/tasks/staged-config.yml
+#     params:
+#       AUTH_CONFIG_FILE: auth147-1.yml
+#       PRODUCT_NAME: p-healthwatch 
+#   - put: staged-config-file
+#     params:
+#       file: generated-config/p-healthwatch.yml
+
+
