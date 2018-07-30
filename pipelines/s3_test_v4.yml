@@ -121,7 +121,7 @@ jobs:
     image: pcf-automation-image
     file: pcf-automation-tasks/tasks/configure-product.yml
     params:
-      CONFIG_FILE: configured-template/haas147_p-healthwatch-1.0.0.yml
+      CONFIG_FILE: haas147_p-healthwatch-1.0.0.yml
       VARS_FILE:
         
   # - put: configured-template

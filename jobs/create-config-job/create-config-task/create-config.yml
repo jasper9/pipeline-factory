@@ -5,6 +5,8 @@ image_resource:
   type: docker-image
   source:
     repository: jasper9/innkeeper2-worker
+
+
 params:
   TILE1_SPEC:
     
@@ -14,7 +16,7 @@ inputs:
 
 
 outputs:
-  - name: configured-template 
+  - name: config
 
 
 
