@@ -29,16 +29,16 @@ resources:
 #     use_v2_signing: ((s3.use_v2_signing))
 #     regexp: wip/installation147-(.*).yml
 
-# - name: staged-config-file
-#   type: s3
-#   source:
-#     access_key_id: ((s3.access_key_id))
-#     bucket: ((s3.bucket))
-#     secret_access_key: ((s3.secret_access_key))
-#     endpoint: ((s3.endpoint))
-#     skip_ssl_verification: ((s3.skip_ssl_verification))
-#     use_v2_signing: ((s3.use_v2_signing))
-#     regexp: wip/staged-config147-(.*).yml
+- name: staged-config-file
+  type: s3
+  source:
+    access_key_id: ((s3.access_key_id))
+    bucket: ((s3.bucket))
+    secret_access_key: ((s3.secret_access_key))
+    endpoint: ((s3.endpoint))
+    skip_ssl_verification: ((s3.skip_ssl_verification))
+    use_v2_signing: ((s3.use_v2_signing))
+    regexp: wip/staged-config147-(.*).yml
 
 - name: pcf-automation-tasks
   type: s3
@@ -93,6 +93,8 @@ jobs:
     params:
       AUTH_CONFIG_FILE: auth147-1.yml
       PRODUCT_NAME: p-healthwatch 
-
+  - put: staged-config-file
+    params:
+      file: wip/staged-config147-1.zip      
 
 
