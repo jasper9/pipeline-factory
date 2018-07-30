@@ -18,6 +18,17 @@ resources:
     use_v2_signing: ((s3.use_v2_signing))
     regexp: auth147-(.*).yml
 
+- name: installation
+  type: s3
+  source:
+    access_key_id: ((s3.access_key_id))
+    bucket: ((s3.bucket))
+    secret_access_key: ((s3.secret_access_key))
+    endpoint: ((s3.endpoint))
+    skip_ssl_verification: ((s3.skip_ssl_verification))
+    use_v2_signing: ((s3.use_v2_signing))
+    regexp: wip/installation147-(.*).yml
+
 - name: pcf-automation-tasks
   type: s3
   source:
@@ -70,4 +81,7 @@ jobs:
     file: pcf-automation-tasks/tasks/export-installation.yml
     params:
       AUTH_CONFIG_FILE: auth147-1.yml 
-
+- name: upload-file
+    - put: installation
+      params:
+        file: installation/installation.zip
