@@ -33,6 +33,11 @@ resources:
 #     skip_ssl_verification: ((s3.skip_ssl_verification))
 #     use_v2_signing: ((s3.use_v2_signing))
 #     regexp: templates/((tile1-slug))-(.*).yml
+- name: nsx-t-ci-pipeline
+  type: git
+  source:
+    uri: https://github.com/sparameswaran/nsx-t-ci-pipeline.git
+    branch: master
 
 
 - name: auth
@@ -145,7 +150,8 @@ jobs:
   max_in_flight: 1
   plan:
   - aggregate:
-    #- get: pipeline-factory    
+    #- get: pipeline-factory      
+    - get: nsx-t-ci-pipeline
     - get: auth
     - get: p-healthwatch-s3
     - get: stemcell
@@ -162,8 +168,13 @@ jobs:
       product: p-healthwatch-s3
     params:
       AUTH_CONFIG_FILE: auth147-1.yml
-#  - task: resolve-stemcell
-#    file: pipeline-factory/tasks/resolve-stemcell/resolve-stemcell.yml
+  - task: resolve-stemcell
+    file: pipeline-factory/tasks/resolve-stemcell/resolve-stemcell.yml
+    params:
+      OPSMAN_DOMAIN_OR_IP_ADDRESS: ((OPSMAN_DOMAIN_OR_IP_ADDRESS))
+      OPSMAN_USERNAME: ((OPSMAN_USERNAME))
+      OPSMAN_PASSWORD: ((OPSMAN_PASSWORD))
+      pivnet_token: ((pivnet_token))
   - task: upload-stemcell
     image: pcf-automation-image
     file: pcf-automation-tasks/tasks/upload-stemcell.yml

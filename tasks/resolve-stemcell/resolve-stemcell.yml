@@ -6,9 +6,17 @@ image_resource:
   type: docker-image
   source: {repository: czero/cflinuxfs2}
 
+params:
+  OPSMAN_DOMAIN_OR_IP_ADDRESS:
+  OPSMAN_USERNAME:
+  OPSMAN_PASSWORD:
+  PIVNET_API_TOKEN:
+  IAAS:
+    
 inputs:
   - name: pipeline-factory
   - name: p-healthwatch-s3
+  - name: nsx-t-ci-pipeline
 
 run:
   path: pipeline-factory/tasks/resolve-stemcell/resolve-stemcell.sh
