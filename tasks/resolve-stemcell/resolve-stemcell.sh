@@ -1,7 +1,8 @@
 #!/bin/bash -eu
 
-tile_metadata=$(unzip -l pivnet-product/*.pivotal | grep "metadata" | grep "ml$" | awk '{print $NF}')
-STEMCELL_VERSION_FROM_TILE=$(unzip -p pivnet-product/*.pivotal $tile_metadata | grep -A5 stemcell_criteria:  \
+
+tile_metadata=$(unzip -l */*.pivotal | grep "metadata" | grep "ml$" | awk '{print $NF}')
+STEMCELL_VERSION_FROM_TILE=$(unzip -p */*.pivotal $tile_metadata | grep -A5 stemcell_criteria:  \
                                   | grep version: | grep -Ei "[0-9]+{2}" | awk '{print $NF}' | sed "s/'//g" )
 
 echo "Stemcell required: $STEMCELL_VERSION_FROM_TILE"
