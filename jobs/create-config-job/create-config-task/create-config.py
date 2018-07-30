@@ -23,14 +23,16 @@ print("Let's get it started")
 print("Deployment network is " + tile1_spec['deployment_network'])
 
 vals = {
-    'deployment_network': "PAS-Deployment",
-    'az1': 'az1',
-    'az2': 'az2',
-    'az3': 'az3',
-    'service_network': 'PAS-Services', 
-    'opsmgr_url': 'https://opsmgr-01.haas-147.pez.pivotal.io'
+    'deployment_network': tile1_spec['deployment_network'],
+    'az1': tile1_spec['az1'],
+    'az2': tile1_spec['az2'],
+    'az3': tile1_spec['az3'],
+    'service_network': tile1_spec['service_network'], 
+    'opsmgr_url': tile1_spec['opsmgr_url']
     }
 
+for key in tile1_spec:
+	print(key + " == " + tile1_spec[key])
 
 #with open("template/p-healthwatch-1.yml", "r") as in_file:
 #	with open("configured-template/haas147_p-healthwatch-1.0.0.yml", "w") as out_file:
