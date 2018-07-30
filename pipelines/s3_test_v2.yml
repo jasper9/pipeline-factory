@@ -81,7 +81,8 @@ jobs:
     file: pcf-automation-tasks/tasks/export-installation.yml
     params:
       AUTH_CONFIG_FILE: auth147-1.yml 
-- name: upload-file
-    - put: installation
-      params:
-        file: installation/installation.zip
+  - put: installation
+    params:
+      file: installation/installation.zip      
+
+
