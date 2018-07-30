@@ -62,7 +62,7 @@ jobs:
     - get: pcf-automation-image
       params:
         unpack: true
-  - put: auth
+  - put: auth/auth.yml
     params:
       file: auth/auth-1.yml 
   - task: export-installation
