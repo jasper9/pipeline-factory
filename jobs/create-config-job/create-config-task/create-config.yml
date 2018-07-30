@@ -10,7 +10,6 @@ params:
     
 inputs:
   - name: pipeline-factory
-  
   - name: template
 
 
