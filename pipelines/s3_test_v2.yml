@@ -69,5 +69,5 @@ jobs:
     image: pcf-automation-image
     file: pcf-automation-tasks/tasks/export-installation.yml
     params:
-      AUTH_CONFIG_FILE: auth/auth-1.yml
+      AUTH_CONFIG_FILE: auth-1.yml
 
