@@ -119,7 +119,7 @@ resources:
     endpoint: ((s3.endpoint))
     skip_ssl_verification: ((s3.skip_ssl_verification))
     use_v2_signing: ((s3.use_v2_signing))
-    regexp: tiles/p-healthwatch-(.*).pivotal
+    regexp: tiles/p-healthwatch-1.3.1-build.(.*).pivotal
 
 # - name: p-healthwatch-www
 #   type: file-url
