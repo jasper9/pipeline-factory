@@ -64,10 +64,22 @@ jobs:
         unpack: true    
   - task: get-started-task
     file: pipeline-factory/jobs/get-started-job/get-started-task/get-started-task.yml
-    #params: *pipeline_params
 
 - name: export-job
- - task: export-installation
+  plan:
+  - aggregate:
+    - get: auth
+    - get: pipeline-factory
+    - get: pcf-automation-tasks
+      params:
+        unpack: true
+    - get: pcf-automation-image
+      params:
+        unpack: true
+  - put: auth
+    params:
+      file: auth/auth.yml
+  - task: export-installation
     image: pcf-automation-image
     file: pcf-automation-tasks/tasks/export-installation.yml
 
