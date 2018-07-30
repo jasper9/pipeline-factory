@@ -1,0 +1,14 @@
+---
+
+platform: linux
+
+image_resource:
+  type: docker-image
+  source: {repository: czero/cflinuxfs2}
+
+inputs:
+  - name: pipeline-factory
+  - name: p-healthwatch-s3
+
+run:
+  path: pipeline-factory/tasks/resolve-stemcell/resolve-stemcell.sh
