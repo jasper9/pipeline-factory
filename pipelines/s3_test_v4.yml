@@ -121,6 +121,12 @@ resources:
     use_v2_signing: ((s3.use_v2_signing))
     regexp: tiles/p-healthwatch-(.*).pivotal
 
+# - name: p-healthwatch-www
+#   type: file-url
+#   source:
+#     url: ((file_webserver))/((tile1_filename))
+#     filename: ((tile1_filename))
+
 jobs:
 - name: upload-healthwatch
   max_in_flight: 1
