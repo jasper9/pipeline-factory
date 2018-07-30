@@ -20,5 +20,8 @@ tile1_spec = yaml.load(tile1_spec)
 print("Let's get it started")
 print("Deployment network is " + tile1_spec['deployment_network'])
 
-with open("generated-config/config.yml", "w") as f:
-	f.write("blah")
+
+with open("template.yml", "r") as in_file:
+	with open("generated-config/config.yml", "w") as out_file:
+		for line in in_file:
+			out_file.write(line)
