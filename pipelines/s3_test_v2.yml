@@ -16,7 +16,7 @@ resources:
     endpoint: ((s3.endpoint))
     skip_ssl_verification: ((s3.skip_ssl_verification))
     use_v2_signing: ((s3.use_v2_signing))
-    regexp: auth-(.*).yml
+    regexp: auth-147(.*).yml
 
 - name: pcf-automation-tasks
   type: s3
@@ -64,10 +64,10 @@ jobs:
         unpack: true
   - put: auth
     params:
-      file: auth/auth-1.yml 
+      file: auth/auth-147.yml 
   - task: export-installation
     image: pcf-automation-image
     file: pcf-automation-tasks/tasks/export-installation.yml
     params:
-      AUTH_CONFIG_FILE: auth-1.yml
+      AUTH_CONFIG_FILE: auth-147.yml
 
