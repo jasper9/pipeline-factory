@@ -135,7 +135,7 @@ resources:
     endpoint: ((s3.endpoint))
     skip_ssl_verification: ((s3.skip_ssl_verification))
     use_v2_signing: ((s3.use_v2_signing))
-    regexp: bosh-stemcell-(.*)-ubuntu-trusty-go_agent.tgz
+    regexp: stemcells/bosh-stemcell-(.*)-ubuntu-trusty-go_agent.tgz
 
 
 
