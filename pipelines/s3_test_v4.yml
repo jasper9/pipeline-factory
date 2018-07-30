@@ -15,7 +15,7 @@ resources:
     endpoint: ((s3.endpoint))
     skip_ssl_verification: ((s3.skip_ssl_verification))
     use_v2_signing: ((s3.use_v2_signing))
-    regexp: wip/haas147_p-healthwatch-(.*).yml
+    regexp: configured-template/haas147_p-healthwatch-(.*).yml
 
 
 - name: template
@@ -107,7 +107,7 @@ jobs:
 
   - put: configured-template
     params:
-      file: generated-config/haas147_p-healthwatch-1.0.0.yml 
+      file: configured-template/haas147_p-healthwatch-1.0.0.yml 
 
 
 # - name: staged-config-job
