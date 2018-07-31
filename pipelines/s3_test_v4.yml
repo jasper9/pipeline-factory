@@ -168,18 +168,20 @@ jobs:
       product: pivnet-tile-s3
     params:
       AUTH_CONFIG_FILE: auth147-1.yml
-  - task: resolve-stemcell
-    file: pipeline-factory/tasks/resolve-stemcell/resolve-stemcell.yml
-    params:
-      OPSMAN_DOMAIN_OR_IP_ADDRESS: ((OPSMAN_DOMAIN_OR_IP_ADDRESS))
-      OPSMAN_USERNAME: ((OPSMAN_USERNAME))
-      OPSMAN_PASSWORD: ((OPSMAN_PASSWORD))
-      pivnet_token: ((pivnet_token))
-  # - task: upload-stemcell
-  #   image: pcf-automation-image
-  #   file: pcf-automation-tasks/tasks/upload-stemcell.yml
+  
+  # - task: resolve-stemcell
+  #   file: pipeline-factory/tasks/resolve-stemcell/resolve-stemcell.yml
   #   params:
-  #     AUTH_CONFIG_FILE: auth147-1.yml
+  #     OPSMAN_DOMAIN_OR_IP_ADDRESS: ((OPSMAN_DOMAIN_OR_IP_ADDRESS))
+  #     OPSMAN_USERNAME: ((OPSMAN_USERNAME))
+  #     OPSMAN_PASSWORD: ((OPSMAN_PASSWORD))
+  #     pivnet_token: ((pivnet_token))
+
+  - task: upload-stemcell
+    image: pcf-automation-image
+    file: pcf-automation-tasks/tasks/upload-stemcell.yml
+    params:
+      AUTH_CONFIG_FILE: auth147-1.yml
 
 
 - name: config-healthwatch
