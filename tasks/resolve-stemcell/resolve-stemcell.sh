@@ -27,7 +27,7 @@ else
   #upload_stemcells "$STEMCELL_VERSION_FROM_TILE"
 
 #  local stemcell_versions="$1"
-local stemcell_versions = $STEMCELL_VERSION_FROM_TILE
+stemcell_versions = $STEMCELL_VERSION_FROM_TILE
 
   for stemcell_version_reqd in $stemcell_versions
   do
