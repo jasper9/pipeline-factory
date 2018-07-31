@@ -165,7 +165,7 @@ jobs:
     image: pcf-automation-image
     file: pcf-automation-tasks/tasks/upload-and-stage-product.yml
     input_mapping:
-      product: p-healthwatch-s3
+      product: pivnet-tile-s3
     params:
       AUTH_CONFIG_FILE: auth147-1.yml
   - task: resolve-stemcell
