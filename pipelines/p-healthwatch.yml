@@ -180,6 +180,8 @@ jobs:
   - task: upload-stemcell
     image: pcf-automation-image
     file: pcf-automation-tasks/tasks/upload-stemcell.yml
+    input_mapping:
+      stemcell: stemcell-01
     params:
       AUTH_CONFIG_FILE: auth147-1.yml
 
