@@ -13,11 +13,11 @@ params:
   OPSMAN_PASSWORD:
   pivnet_token:
   IAAS:
-    
+
 inputs:
   - name: pipeline-factory
-  - name: p-healthwatch-s3
-  - name: nsx-t-ci-pipeline
+  - name: pivnet-tile-s3
+  #- name: nsx-t-ci-pipeline
 
 run:
   path: pipeline-factory/tasks/resolve-stemcell/resolve-stemcell.sh

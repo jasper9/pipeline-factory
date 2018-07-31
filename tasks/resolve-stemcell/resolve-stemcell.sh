@@ -1,5 +1,10 @@
 #!/bin/bash -eu
 
+# all bash code here borrow from Sabha's task at:
+#		https://github.com/sparameswaran/nsx-t-ci-pipeline/blob/master/tasks/upload-product-and-stemcell/task.sh
+#		and
+#		https://github.com/sparameswaran/nsx-t-ci-pipeline/blob/master/functions/upload_stemcell.sh
+
 
 tile_metadata=$(unzip -l */*.pivotal | grep "metadata" | grep "ml$" | awk '{print $NF}')
 STEMCELL_VERSION_FROM_TILE=$(unzip -p */*.pivotal $tile_metadata | grep -A5 stemcell_criteria:  \
