@@ -5,8 +5,10 @@
 #		and
 #		https://github.com/sparameswaran/nsx-t-ci-pipeline/blob/master/functions/upload_stemcell.sh
 
-
+# unzip -l */*.pivotal | grep "metadata" | grep ml$ | awk '{print $NF}'
+#metadata/p_healthwatch.yml
 tile_metadata=$(unzip -l */*.pivotal | grep "metadata" | grep "ml$" | awk '{print $NF}')
+
 STEMCELL_VERSION_FROM_TILE=$(unzip -p */*.pivotal $tile_metadata | grep -A5 stemcell_criteria:  \
                                   | grep version: | grep -Ei "[0-9]+{2}" | awk '{print $NF}' | sed "s/'//g" )
 
@@ -22,7 +24,7 @@ if [ "$SC_FILE_PATH" != "" ]; then
            upload-stemcell -s $SC_FILE_PATH
 else
   #source nsx-t-ci-pipeline/functions/upload_stemcell.sh
-  echo "No cached stemcell; Will download and then upload stemcell: $SC_FILE_PATH to Ops Mgr"
+  echo "No cached stemcell; Will download and then upload stemcell"
   
   #upload_stemcells "$STEMCELL_VERSION_FROM_TILE"
 
@@ -63,9 +65,9 @@ echo $diagnostic_report
             else
               "stemcells"
             end
-            ' < pivnet-product/metadata.json
+            ' < $tile_metadata
         )
-
+        echo "Logging into pivnet..."
         pivnet-cli login --api-token="$PIVNET_API_TOKEN"
     set +e
         pivnet-cli download-product-files -p "$product_slug" -r $stemcell_version_reqd -g "*${IAAS}*" --accept-eula
