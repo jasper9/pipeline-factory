@@ -21,7 +21,7 @@ if [ "$SC_FILE_PATH" != "" ]; then
            -k --request-timeout 3600 \
            upload-stemcell -s $SC_FILE_PATH
 else
-  source nsx-t-ci-pipeline/functions/upload_stemcell.sh
+  #source nsx-t-ci-pipeline/functions/upload_stemcell.sh
   echo "No cached stemcell; Will download and then upload stemcell: $SC_FILE_PATH to Ops Mgr"
   
   #upload_stemcells "$STEMCELL_VERSION_FROM_TILE"
