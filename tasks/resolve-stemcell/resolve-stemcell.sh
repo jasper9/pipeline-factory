@@ -42,6 +42,8 @@ else
           curl --silent --path "/api/v0/diagnostic_report"
       )
 
+echo $diagnostic_report
+
       stemcell=$(
         echo $diagnostic_report |
         jq \
