@@ -123,6 +123,6 @@ jobs:
 
   - put: staged-config-file
     params:
-      file: generated-config/p-redis_1.12.3.yml
+      file: generated-config/p-redis.yml
 
 

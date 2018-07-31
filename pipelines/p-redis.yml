@@ -1,0 +1,236 @@
+---
+
+pipeline_params: &pipeline_params
+  TILE1_SPEC: ((tile1_spec))
+
+resource_types:
+- name: pivnet
+  type: docker-image
+  source:
+    repository: pivotalcf/pivnet-resource
+    tag: latest-final
+
+resources:
+# - name: configured-template
+#   type: s3
+#   source:
+#     access_key_id: ((s3.access_key_id))
+#     bucket: ((s3.bucket))
+#     secret_access_key: ((s3.secret_access_key))
+#     endpoint: ((s3.endpoint))
+#     skip_ssl_verification: ((s3.skip_ssl_verification))
+#     use_v2_signing: ((s3.use_v2_signing))
+#     regexp: configured-template/haas147_p-healthwatch-(.*).yml
+
+
+# - name: template
+#   type: s3
+#   source:
+#     access_key_id: ((s3.access_key_id))
+#     bucket: ((s3.bucket))
+#     secret_access_key: ((s3.secret_access_key))
+#     endpoint: ((s3.endpoint))
+#     skip_ssl_verification: ((s3.skip_ssl_verification))
+#     use_v2_signing: ((s3.use_v2_signing))
+#     regexp: templates/((tile1-slug))-(.*).yml
+- name: nsx-t-ci-pipeline
+  type: git
+  source:
+    uri: https://github.com/sparameswaran/nsx-t-ci-pipeline.git
+    branch: master
+
+
+- name: auth
+  type: s3
+  source:
+    access_key_id: ((s3.access_key_id))
+    bucket: ((s3.bucket))
+    secret_access_key: ((s3.secret_access_key))
+    endpoint: ((s3.endpoint))
+    skip_ssl_verification: ((s3.skip_ssl_verification))
+    use_v2_signing: ((s3.use_v2_signing))
+    regexp: auth147-(.*).yml
+
+# - name: installation
+#   type: s3
+#   source:
+#     access_key_id: ((s3.access_key_id))
+#     bucket: ((s3.bucket))
+#     secret_access_key: ((s3.secret_access_key))
+#     endpoint: ((s3.endpoint))
+#     skip_ssl_verification: ((s3.skip_ssl_verification))
+#     use_v2_signing: ((s3.use_v2_signing))
+#     regexp: wip/installation147-(.*).yml
+
+# - name: staged-config-file
+#   type: s3
+#   source:
+#     access_key_id: ((s3.access_key_id))
+#     bucket: ((s3.bucket))
+#     secret_access_key: ((s3.secret_access_key))
+#     endpoint: ((s3.endpoint))
+#     skip_ssl_verification: ((s3.skip_ssl_verification))
+#     use_v2_signing: ((s3.use_v2_signing))
+#     regexp: wip/staged-config147-(.*).yml
+
+- name: pcf-automation-tasks
+  type: s3
+  source:
+    access_key_id: ((s3.access_key_id))
+    bucket: ((s3.bucket))
+    secret_access_key: ((s3.secret_access_key))
+    endpoint: ((s3.endpoint))
+    skip_ssl_verification: ((s3.skip_ssl_verification))
+    use_v2_signing: ((s3.use_v2_signing))
+    regexp: tasks-(.*).zip
+
+- name: pcf-automation-image
+  type: s3
+  source:
+    access_key_id: ((s3.access_key_id))
+    bucket: ((s3.bucket))
+    secret_access_key: ((s3.secret_access_key))
+    endpoint: ((s3.endpoint))
+    skip_ssl_verification: ((s3.skip_ssl_verification))
+    use_v2_signing: ((s3.use_v2_signing))
+    regexp: image-(.*).tar
+
+- name: pipeline-factory
+  type: git
+  source:
+    uri: https://github.com/jasper9/pipeline-factory.git
+    branch: master
+
+- name: pipeline-factory-templates
+  type: git
+  source:
+    uri: https://github.com/jasper9/pipeline-factory-templates.git
+    branch: master
+
+
+
+- name: product-01
+  type: s3
+  source:
+    access_key_id: ((s3.access_key_id))
+    bucket: ((s3.bucket))
+    secret_access_key: ((s3.secret_access_key))
+    endpoint: ((s3.endpoint))
+    skip_ssl_verification: ((s3.skip_ssl_verification))
+    use_v2_signing: ((s3.use_v2_signing))
+    regexp: tiles/p-redis-1.12.(.*)
+
+
+
+- name: stemcell-01
+  type: s3
+  source:
+    access_key_id: ((s3.access_key_id))
+    bucket: ((s3.bucket))
+    secret_access_key: ((s3.secret_access_key))
+    endpoint: ((s3.endpoint))
+    skip_ssl_verification: ((s3.skip_ssl_verification))
+    use_v2_signing: ((s3.use_v2_signing))
+    regexp: stemcells/bosh-stemcell-3541.36-vsphere-esxi-ubuntu-trusty-go_agent.(.*)
+
+
+
+jobs:
+- name: upload-healthwatch
+  max_in_flight: 1
+  plan:
+  - aggregate:
+    - get: pipeline-factory      
+    - get: nsx-t-ci-pipeline
+    - get: auth
+    - get: product-01
+    - get: stemcell-01
+    - get: pcf-automation-tasks
+      params:
+        unpack: true
+    - get: pcf-automation-image
+      params:
+        unpack: true
+  - task: upload-and-stage-product
+    image: pcf-automation-image
+    file: pcf-automation-tasks/tasks/upload-and-stage-product.yml
+    input_mapping:
+      product: product-01
+    params:
+      AUTH_CONFIG_FILE: auth147-1.yml
+  
+  # - task: resolve-stemcell
+  #   file: pipeline-factory/tasks/resolve-stemcell/resolve-stemcell.yml
+  #   params:
+  #     OPSMAN_DOMAIN_OR_IP_ADDRESS: ((OPSMAN_DOMAIN_OR_IP_ADDRESS))
+  #     OPSMAN_USERNAME: ((OPSMAN_USERNAME))
+  #     OPSMAN_PASSWORD: ((OPSMAN_PASSWORD))
+  #     pivnet_token: ((pivnet_token))
+
+  - task: upload-stemcell
+    image: pcf-automation-image
+    file: pcf-automation-tasks/tasks/upload-stemcell.yml
+    input_mapping:
+      stemcell: stemcell-01
+    params:
+      AUTH_CONFIG_FILE: auth147-1.yml
+
+
+- name: config-healthwatch
+  max_in_flight: 1
+  plan:
+  - aggregate:
+    - get: pipeline-factory
+    - get: pipeline-factory-templates
+    - get: auth
+    - get: pcf-automation-tasks
+      passed: [upload-healthwatch]
+      trigger: true 
+      params:
+        unpack: true
+    - get: pcf-automation-image
+      params:
+        unpack: true
+
+  - task: create-config
+    file: pipeline-factory/tasks/create-config/create-config.yml
+    params: *pipeline_params
+
+  - task: configure-healthwatch
+    image: pcf-automation-image
+    file: pcf-automation-tasks/tasks/configure-product.yml
+    params:
+      AUTH_CONFIG_FILE: auth147-1.yml
+      CONFIG_FILE: p-redis.yml
+      VARS_FILE:
+
+  # - put: configured-template
+  #   params:
+  #     file: configured-template/haas147_p-healthwatch-1.0.0.yml 
+
+
+# - name: staged-config-job
+#   plan:
+#   - aggregate:  
+#     - get: auth
+#     - get: pipeline-factory
+#     - get: pcf-automation-tasks
+#       params:
+#         unpack: true
+#     - get: pcf-automation-image
+#       params:
+#         unpack: true
+#   - put: auth
+#     params:
+#       file: auth/auth147-1.yml 
+#   - task: staged-config
+#     image: pcf-automation-image
+#     file: pcf-automation-tasks/tasks/staged-config.yml
+#     params:
+#       AUTH_CONFIG_FILE: auth147-1.yml
+#       PRODUCT_NAME: p-healthwatch 
+#   - put: staged-config-file
+#     params:
+#       file: generated-config/p-healthwatch.yml
+
+
