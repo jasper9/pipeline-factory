@@ -18,5 +18,5 @@ if [ "$SC_FILE_PATH" != "" ]; then
 else
   source nsx-t-ci-pipeline/functions/upload_stemcell.sh
   echo "No cached stemcell; Will download and then upload stemcell: $SC_FILE_PATH to Ops Mgr"
-  upload_stemcells "$STEMCELL_VERSION_FROM_TILE $STEMCELL_VERSION_FROM_PRODUCT_METADATA"
+  upload_stemcells "$STEMCELL_VERSION_FROM_TILE"
 fi
