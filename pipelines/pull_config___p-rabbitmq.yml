@@ -1,0 +1,128 @@
+---
+
+#pipeline_params: &pipeline_params
+#  INPUT_SPEC: ((input_spec))
+
+
+
+resources:
+
+- name: product-01
+  type: s3
+  source:
+    access_key_id: ((s3.access_key_id))
+    bucket: ((s3.bucket))
+    secret_access_key: ((s3.secret_access_key))
+    endpoint: ((s3.endpoint))
+    skip_ssl_verification: ((s3.skip_ssl_verification))
+    use_v2_signing: ((s3.use_v2_signing))
+    regexp: ((product1.slug_regexp))
+
+- name: auth
+  type: s3
+  source:
+    access_key_id: ((s3.access_key_id))
+    bucket: ((s3.bucket))
+    secret_access_key: ((s3.secret_access_key))
+    endpoint: ((s3.endpoint))
+    skip_ssl_verification: ((s3.skip_ssl_verification))
+    use_v2_signing: ((s3.use_v2_signing))
+    regexp: auth147-(.*).yml
+
+
+- name: staged-config-file
+  type: s3
+  source:
+    access_key_id: ((s3.access_key_id))
+    bucket: ((s3.bucket))
+    secret_access_key: ((s3.secret_access_key))
+    endpoint: ((s3.endpoint))
+    skip_ssl_verification: ((s3.skip_ssl_verification))
+    use_v2_signing: ((s3.use_v2_signing))
+    regexp: staged-config-incoming/(.*).yml
+
+- name: pcf-automation-tasks
+  type: s3
+  source:
+    access_key_id: ((s3.access_key_id))
+    bucket: ((s3.bucket))
+    secret_access_key: ((s3.secret_access_key))
+    endpoint: ((s3.endpoint))
+    skip_ssl_verification: ((s3.skip_ssl_verification))
+    use_v2_signing: ((s3.use_v2_signing))
+    regexp: tasks-(.*).zip
+
+- name: pcf-automation-image
+  type: s3
+  source:
+    access_key_id: ((s3.access_key_id))
+    bucket: ((s3.bucket))
+    secret_access_key: ((s3.secret_access_key))
+    endpoint: ((s3.endpoint))
+    skip_ssl_verification: ((s3.skip_ssl_verification))
+    use_v2_signing: ((s3.use_v2_signing))
+    regexp: image-(.*).tar
+
+- name: pipeline-factory
+  type: git
+  source:
+    uri: https://github.com/jasper9/pipeline-factory.git
+    branch: master
+
+- name: nsx-t-ci-pipeline
+  type: git
+  source:
+    uri: https://github.com/sparameswaran/nsx-t-ci-pipeline.git
+    branch: master
+
+
+jobs:
+
+- name: upload-product1
+  max_in_flight: 1
+  plan:
+  - aggregate:
+    - get: pipeline-factory      
+    - get: nsx-t-ci-pipeline
+    - get: auth
+    - get: product-01
+    - get: pcf-automation-tasks
+      params:
+        unpack: true
+    - get: pcf-automation-image
+      params:
+        unpack: true
+  - task: upload-and-stage-product
+    image: pcf-automation-image
+    file: pcf-automation-tasks/tasks/upload-and-stage-product.yml
+    input_mapping:
+      product: product-01
+    params:
+      AUTH_CONFIG_FILE: auth147-1.yml
+
+
+- name: get-staged-config
+  plan:
+  - aggregate:  
+    - get: auth
+    - get: pipeline-factory
+      passed: [upload-product1]
+      trigger: true 
+    - get: pcf-automation-tasks
+      params:
+        unpack: true
+    - get: pcf-automation-image
+      params:
+        unpack: true
+  - task: get-staged-config-task
+    image: pcf-automation-image
+    file: pcf-automation-tasks/tasks/staged-config.yml
+    params:
+      AUTH_CONFIG_FILE: auth147-1.yml
+      PRODUCT_NAME: ((product1.slug_name)) 
+
+  - put: staged-config-file
+    params:
+      file: generated-config/((product1.slug_name)).yml
+
+
