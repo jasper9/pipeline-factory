@@ -5,6 +5,7 @@ pipeline_params: &pipeline_params
 
 
 
+resources:
 - name: product-01
   type: s3
   source:
@@ -14,7 +15,8 @@ pipeline_params: &pipeline_params
     endpoint: ((s3.endpoint))
     skip_ssl_verification: ((s3.skip_ssl_verification))
     use_v2_signing: ((s3.use_v2_signing))
-    regexp: tiles/pivotal-mysql-(.*).pivotal
+    #regexp: tiles/pivotal-mysql-(.*).pivotal
+    regexp: tiles/pivotal-mysql-2.3.1-build.11.p(.*)
 
 - name: pipeline-factory
   type: git
@@ -31,7 +33,7 @@ jobs:
   - aggregate:
     - get: product-01
     - get: pipeline-factory
-    
+
   - task: get-started-task
     file: pipeline-factory/jobs/get-started-job/get-started-task/get-started-task.yml
     #params: *pipeline_params
