@@ -1,0 +1,39 @@
+---
+
+pipeline_params: &pipeline_params
+  TILE1_SPEC: ((tile1_spec))
+
+
+
+- name: product-01
+  type: s3
+  source:
+    access_key_id: ((s3.access_key_id))
+    bucket: ((s3.bucket))
+    secret_access_key: ((s3.secret_access_key))
+    endpoint: ((s3.endpoint))
+    skip_ssl_verification: ((s3.skip_ssl_verification))
+    use_v2_signing: ((s3.use_v2_signing))
+    regexp: tiles/pivotal-mysql-(.*).pivotal
+
+- name: pipeline-factory
+  type: git
+  source:
+    uri: https://github.com/jasper9/pipeline-factory.git
+    branch: master
+
+
+jobs:
+
+- name: get-started-job
+  max_in_flight: 1
+  plan:
+  - aggregate:
+    - get: product-01
+    - get: pipeline-factory
+    
+  - task: get-started-task
+    file: pipeline-factory/jobs/get-started-job/get-started-task/get-started-task.yml
+    #params: *pipeline_params
+
+
